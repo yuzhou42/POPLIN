@@ -247,10 +247,17 @@ def _create_ctrl_config(ctrl_cfg, cfg_module, ctrl_type, ctrl_args, type_map):
                 )
             ctrl_cfg.prop_cfg.model_train_cfg = cfg_module.NN_TRAIN_CFG
             model_init_cfg.model_constructor = cfg_module.nn_constructor
-
+            model_init_cfg.network_shape = [200,200,200,200]
+            model_init_cfg.activation = 'swish'
+            model_init_cfg.lr = 0.001
+            model_init_cfg.weight_decays = [0.000025,0.00005,0.000075,0.000075,0.0001]
             # Add possible overrides
             type_map.ctrl_cfg.prop_cfg.model_init_cfg.model_dir = str
             type_map.ctrl_cfg.prop_cfg.model_init_cfg.load_model = make_bool
+            type_map.ctrl_cfg.prop_cfg.model_init_cfg.network_shape = list
+            type_map.ctrl_cfg.prop_cfg.model_init_cfg.activation = str
+            type_map.ctrl_cfg.prop_cfg.model_init_cfg.lr = float
+            type_map.ctrl_cfg.prop_cfg.model_init_cfg.weight_decays = list
 
             type_map.ctrl_cfg.prop_cfg.model_train_cfg = DotMap(
                 batch_size=int, epochs=int,

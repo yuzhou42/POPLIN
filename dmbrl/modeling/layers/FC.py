@@ -20,6 +20,7 @@ class FC:
         "softmax": tf.nn.softmax,
         "swish": lambda x: x * tf.sigmoid(x),
         "leaky_relu": tf.nn.leaky_relu,
+        "sine": tf.math.sin,
         "relu": tf.nn.relu,  # same as ReLU
     }
 
@@ -39,6 +40,7 @@ class FC:
         """
         # Set layer parameters
         self.input_dim, self.output_dim = input_dim, output_dim
+        # print('\n\n activation received was {} \n\n'.format(activation))
         self.activation = activation
         self.normalization = normalization
         self.weight_decay = weight_decay

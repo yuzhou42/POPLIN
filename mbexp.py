@@ -6,6 +6,8 @@ import os
 import argparse
 import pprint
 import copy
+from copy import deepcopy
+
 
 from dotmap import DotMap
 
@@ -15,9 +17,23 @@ from dmbrl.config import create_config
 from dmbrl.misc import logger
 
 
+
 def main(env, ctrl_type, ctrl_args, overrides, logdir, args):
+    from copy import deepcopy
+
     ctrl_args = DotMap(**{key: val for (key, val) in ctrl_args})
     cfg = create_config(env, ctrl_type, ctrl_args, overrides, logdir)
+    # this line ensures that you don't always need to add weight decay wheenver you change the network architecture:
+    weight_decays = cfg.ctrl_cfg.prop_cfg.model_init_cfg.weight_decays
+    print(type(weight_decays))
+    network_shape = cfg.ctrl_cfg.prop_cfg.model_init_cfg.network_shape
+    if((len(weight_decays)-len(network_shape))< 1):
+        k = deepcopy(network_shape)
+        k[:len(weight_decays)-1] = weight_decays[:-1]
+        k[len(weight_decays)-1:-1] = len(k[len(weight_decays)-1:-1])*[weight_decays[-2]]
+        k[-1] = weight_decays[-1]
+        weight_decays = k
+    cfg.ctrl_cfg.prop_cfg.model_init_cfg.weight_decays = weight_decays
     logger.info('\n' + pprint.pformat(cfg))
 
     # add the part of popsize
