@@ -357,22 +357,37 @@ def apply_override(cfg, type_map, override_key, value, prefix=''):
         value = value.replace('[', '')
         value = value.replace(']', '')
         value = value.split(',')
-        value = [int(val) for val in value if val != '']
+        tmp = []
+        for val in value:
+            if(val != ''):
+                try:
+                    tmp2 = int(val)
+                except ValueError as e:
+                    tmp2 = float(val)
+                    # print('error here!!!, tmp2 = {}'.format(tmp2))
+                tmp.append(tmp2)
+                value = tmp
+                
+        # value = [int(val) for val in value if val != '']
     if len(prefix) == 0 or pth[:len(filter_pth)] == prefix.split("."):
         cur_map = cfg
         cur_type_map = type_map
         try:
             for key in pth[:-1]:
+                # print('\n\n this is the key : {} | This is its type: {}'.format(key,type(key)))
+
                 cur_map = cur_map[key]
+                # print('gets here ')
                 cur_type_map = cur_type_map[key]
         except KeyError:
             raise KeyError(
-                "Either %s cannot be overridden (is a function/object/class/etc.) or "
+                "1-Either %s cannot be overridden (is a function/object/class/etc.) or "
                 "the type map is not updated." % override_key
             )
         if cur_type_map.get(pth[-1], None) is None:
+            print(pth)
             raise KeyError(
-                "Either %s cannot be overridden (is a function/object/class/etc.) or "
+                "2-Either %s cannot be overridden (is a function/object/class/etc.) or "
                 "the type map is not updated." % override_key
             )
         cur_map[pth[-1]] = cur_type_map[pth[-1]](value)
