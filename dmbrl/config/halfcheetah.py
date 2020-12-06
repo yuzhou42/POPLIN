@@ -98,6 +98,7 @@ class HalfCheetahConfigModule:
             misc=misc
         ))
         if not model_init_cfg.get("load_model", False):
+            print('not building model from scratch')
             network_shape = get_required_argument(model_init_cfg,"network_shape","network shape missing!")
             activation = get_required_argument(model_init_cfg,"activation","acivations missing!")
             weight_decays = get_required_argument(model_init_cfg,"weight_decays","weight decays missing!")
@@ -108,7 +109,7 @@ class HalfCheetahConfigModule:
         #     model.add(FC(200, activation="swish", weight_decay=0.000075))
         #     model.add(FC(200, activation="swish", weight_decay=0.000075))
         #     model.add(FC(self.MODEL_OUT, weight_decay=0.0001))
-        # model.finalize(tf.train.AdamOptimizer, {"learning_rate": 0.001})
+        model.finalize(tf.train.AdamOptimizer, {"learning_rate": get_required_argument(model_init_cfg,"lr","learning rate missing!")})
             
         return model
 

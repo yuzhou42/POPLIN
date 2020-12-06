@@ -24,6 +24,6 @@ def build_model(model,model_in,model_out,network_shape,activations,weight_decays
             model.add(FC(hidden_units, activation=activation, weight_decay=weight_decay))
 
     model.add(FC(model_out, weight_decay=weight_decays[-1]))
-    print("\n\n\n\n this is the type of the learning rate = {} \n\n\n\n".format(type(learning_rate)))
-    model.finalize(tf.train.AdamOptimizer, {"learning_rate": learning_rate})
+    # print("\n\n\n\n this is the type of the learning rate = {} \n\n\n\n".format(type(learning_rate)))
+    # model.finalize(tf.train.AdamOptimizer, {"learning_rate": learning_rate})
     return model

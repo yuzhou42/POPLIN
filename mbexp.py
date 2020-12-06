@@ -20,7 +20,7 @@ from dmbrl.misc import logger
 
 def main(env, ctrl_type, ctrl_args, overrides, logdir, args):
     from copy import deepcopy
-
+    print('\n\n\n\n\nctrl_type = {} \n\n ctrl_args = {} \n\n overrides = {} \n\n , logdir = {} ,\n\n args = {}'.format(ctrl_type,ctrl_args,overrides,logdir,args))
     ctrl_args = DotMap(**{key: val for (key, val) in ctrl_args})
     cfg = create_config(env, ctrl_type, ctrl_args, overrides, logdir)
     # this line ensures that you don't always need to add weight decay wheenver you change the network architecture:

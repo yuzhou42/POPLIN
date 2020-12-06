@@ -124,12 +124,13 @@ class AntConfigModule:
         #     model.add(FC(200, activation="swish", weight_decay=0.000075))
         #     model.add(FC(200, activation="swish", weight_decay=0.000075))
         #     model.add(FC(self.MODEL_OUT, weight_decay=0.0001))
-        # model.finalize(tf.train.AdamOptimizer, {"learning_rate": 0.001})
             network_shape = get_required_argument(model_init_cfg,"network_shape","network shape missing!")
             activation = get_required_argument(model_init_cfg,"activation","acivations missing!")
             weight_decays = get_required_argument(model_init_cfg,"weight_decays","weight decays missing!")
             learning_rate = get_required_argument(model_init_cfg,"lr","learning rate missing!")
             model = build_model(model,self.MODEL_IN,self.MODEL_OUT,network_shape,activation,weight_decays,learning_rate)
+        model.finalize(tf.train.AdamOptimizer, {"learning_rate": get_required_argument(model_init_cfg,"lr","learning rate missing!")})
+
         return model
 
     def gp_constructor(self, model_init_cfg):

@@ -173,8 +173,8 @@ class BNN:
         with tf.variable_scope(self.name):
             self.optimizer = optimizer(**optimizer_args)
             self.sy_train_in = tf.placeholder(dtype=tf.float32,
-                                              shape=[self.num_nets, None, self.layers[0].get_input_dim()],
-                                              name="training_inputs")
+                                            shape=[self.num_nets, None, self.layers[0].get_input_dim()],
+                                            name="training_inputs")
             self.sy_train_targ = tf.placeholder(dtype=tf.float32,
                                                 shape=[self.num_nets, None, self.layers[-1].get_output_dim() // 2],
                                                 name="training_targets")

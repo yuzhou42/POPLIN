@@ -25,7 +25,7 @@ class FC:
     }
 
     def __init__(self, output_dim, input_dim=None,
-                 activation=None, normalization=None,
+                 activation=None, normalization="none",
                  weight_decay=None, ensemble_size=1):
         """Initializes a fully connected layer.
 
@@ -43,6 +43,7 @@ class FC:
         # print('\n\n activation received was {} \n\n'.format(activation))
         self.activation = activation
         self.normalization = normalization
+        print("normalization is equal to = {}".format(self.normalization))
         self.weight_decay = weight_decay
         self.ensemble_size = ensemble_size
 
@@ -86,7 +87,9 @@ class FC:
             raise ValueError("Invalid input dimension.")
 
         # Apply activations if necessary
-        if self.normalization is not None and self.normalization is not "none":
+        # print('normalization is equal to , with type {}: {}'.format(self.normalization,type(self.normalization)))
+        self.normalization = 'none'
+        if (self.normalization is not None)and(self.normalization is not "none"):
             from mbbl.util.common.tf_networks import get_normalizer
             normalizer = get_normalizer(self.normalization, train=bm_train)
             shape = raw_output.get_shape().as_list()

@@ -122,7 +122,7 @@ class HopperConfigModule:
         #     model.add(FC(200, activation="swish", weight_decay=0.000075))
         #     model.add(FC(200, activation="swish", weight_decay=0.000075))
         #     model.add(FC(self.MODEL_OUT, weight_decay=0.0001))
-        # model.finalize(tf.train.AdamOptimizer, {"learning_rate": 0.001})
+        model.finalize(tf.train.AdamOptimizer, {"learning_rate": get_required_argument(model_init_cfg,"lr","learning rate missing!")})
         return model
 
     def gp_constructor(self, model_init_cfg):
